@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "JAN25 Flask Intro Stuff",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
