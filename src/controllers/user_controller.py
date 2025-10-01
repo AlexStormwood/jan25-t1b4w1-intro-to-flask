@@ -22,6 +22,7 @@ def get_users_alternative():
 
 
 # Jumping ahead - dynamic routing and POSTing data is beyond the scope of this week!
+# localhost:5000/users/1  (for user with ID of 1)
 @user_bp.route("/<int:user_id>", methods=["GET"])
 def get_user(user_id):
     user = User.query.get(user_id)

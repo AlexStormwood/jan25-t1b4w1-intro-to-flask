@@ -32,5 +32,7 @@ class UserSchema(SQLAlchemyAutoSchema):
     username = fields.Str(required=True)
     email = fields.Email(required=True)
 
+# Singular schema for when we return a single DB record about a user 
 user_schema = UserSchema()
+# Plural schema for when we return multiple DB records about users
 users_schema = UserSchema(many=True)

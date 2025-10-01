@@ -54,6 +54,8 @@ def hello_world():
 
 6. Modify the database so that its owner is now the new user: `ALTER DATABASE mvc_project_db OWNER TO orm_user;`
 
+`# DATABASE_URI=database+driver://username:password@server:port/databasename`
+
 
 7. Add an ORM to our Flask project! Install some needed packages with this command in your regular terminal (no more PostgreSQL shell!): `pip install psycopg2-binary flask-sqlalchemy flask-marshmallow marshmallow-sqlalchemy`
 
