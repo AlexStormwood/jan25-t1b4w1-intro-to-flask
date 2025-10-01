@@ -1,37 +1,33 @@
-from flask import Flask, jsonify
+import os # built-in Python module
+from flask import Flask, jsonify # pip install Flask
+from dotenv import load_dotenv # pip install python-dotenv
+from src.init import db  # our database object from init.py
+from src.controllers.cli_controller import db_commands
+from src.controllers.user_controller import user_bp
 
-app = Flask(__name__)
+load_dotenv()  # take environment variables from .env.
 
-print(__name__)
+def create_app():
+    app = Flask(__name__)
+    print("Flask server starting up...")
 
-@app.route("/")
-def hello_world():
-    return "<p>Hello, pizza!</p>"
+    # set the database URI via SQLAlchemy, 
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URI")
 
+    # keep jsonified data in same order as we wrote it
+    app.json.sort_keys = False  
 
-# http://localhost:5000/articles/
-@app.route("/articles")
-def article_demo_function():
-    # 1. Query the database for articles
-    # 2. Process the result to make sure it's a list of data 
-    # 3. Return the list 
-
-    return jsonify([
-        {
-            "title":"Example Article 1",
-            "content":"Blah blah blah",
-            "author":"130489u23topi2"
-        },
-        {
-            "title":"Example Article 2",
-            "content":"Blah 2 blah blah 2",
-            "author":"3405398urfgop"
-        }
-    ])
+    #create the database object
+    db.init_app(app)
 
 
-@app.route("/bananas", methods=["POST"])
-def post_bananas():
-    return jsonify({
-        "message":"Post bananas!"
-    })
+    @app.route("/")
+    def hello_world():
+        return "<p>Hello, pizza!</p>"
+    
+    # Load up the controllers so our server actually uses them!
+    app.register_blueprint(db_commands)
+    app.register_blueprint(user_bp)
+
+    return app
+
